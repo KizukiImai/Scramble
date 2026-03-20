@@ -9,9 +9,9 @@ int main( ){
 	//Use ofGLFWWindowSettings for more options like multi-monitor fullscreen
 	ofGLFWWindowSettings outputSettings;
 	outputSettings.setGLVersion(4,1); // Ensure we have a modern OpenGL context for shaders
-	outputSettings.setSize(1280, 720);
-	outputSettings.setPosition(glm::vec2(20, 20));
-	outputSettings.windowMode = OF_WINDOW;
+	outputSettings.setSize(1920, 1080);
+	outputSettings.setPosition(glm::vec2(4000, 100));
+	outputSettings.windowMode = OF_FULLSCREEN;
 	outputSettings.title = "VJ Output";
 	auto outputWindow = ofCreateWindow(outputSettings);
 

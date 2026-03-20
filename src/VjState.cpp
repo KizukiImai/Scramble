@@ -8,6 +8,7 @@ void VjState::setup(int outputWidth, int outputHeight)
 	sceneAccumulator = 0.0;
 	currentStep = 0;
 	stepAdvanced = false;
+	scene1PatternStepCounter = 0;
 }
 
 void VjState::resizeOutput(int outputWidth, int outputHeight)
@@ -18,7 +19,7 @@ void VjState::resizeOutput(int outputWidth, int outputHeight)
 	s.internalformat = GL_RGBA;
 	s.useDepth = true;
 	s.useStencil = true;
-	s.depthStencilAsTexture = true; // ‚±‚±‚ð false -> true
+	s.depthStencilAsTexture = true;
 	s.textureTarget = GL_TEXTURE_2D;
 	outputFbo.allocate(s);
 }
@@ -48,6 +49,23 @@ void VjState::update(double dt)
 		currentStep = (currentStep + 1) % 16;
 		stepAdvanced = true;
 		glitchAmount = sequence[static_cast<size_t>(currentStep)];
+
+		if (scene1.bpmPatternSwitch)
+		{
+			const int beats = std::max(1, scene1.bpmPatternEveryBeats);
+			const int stepsPerSwitch = beats * 4; // 4step = 1beat
+			++scene1PatternStepCounter;
+
+			if (scene1PatternStepCounter >= stepsPerSwitch)
+			{
+				scene1PatternStepCounter = 0;
+				scene1.pattern = (scene1.pattern + 1) % 5; // pattern 0..4
+			}
+		}
+		else
+		{
+			scene1PatternStepCounter = 0;
+		}
 	}
 }
 
@@ -82,4 +100,5 @@ void VjState::tapTempo()
 
 	stepAccumulator = 0.0;
 	currentStep = 0;
+	scene1PatternStepCounter = 0;
 }

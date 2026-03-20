@@ -18,6 +18,10 @@ struct Scene1Params
 	float complexity = 4.0f;
 	float morph = 0.5f;
 	float speed = 1.0f;
+
+	// BPM˜A“®‚Å pattern ‚ğ©“®Ø‘Ö
+	bool bpmPatternSwitch = false;
+	int bpmPatternEveryBeats = 1; // 1=–ˆ”, 2=2”‚²‚Æ...
 };
 
 struct Scene2Params
@@ -71,4 +75,6 @@ private:
 	double stepAccumulator = 0.0;
 	double sceneAccumulator = 0.0;
 	std::deque<double> tapTimes;
+
+	int scene1PatternStepCounter = 0;
 };

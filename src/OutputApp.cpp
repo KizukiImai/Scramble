@@ -190,6 +190,51 @@ void OutputApp::drawScene2(float t)
 		}
 	}
 
+	// 追加: 空間アクセント用の別立体
+	ofFill();
+	const int accentCount = std::max(24, n * 6);
+	const float accentRadius = spacing * (n + 1.5f);
+
+	for (int i = 0; i < accentCount; ++i)
+	{
+		const float fi = static_cast<float>(i);
+		const float a = fi * 0.41f + t * (0.25f + p.camOrbit * 0.4f);
+
+		const float r = accentRadius + 120.0f * sinf(fi * 0.7f + t * 0.8f);
+		const glm::vec3 pos(
+			cosf(a) * r,
+			sinf(a * 1.9f + fi * 0.23f) * 260.0f,
+			sinf(a) * r
+		);
+
+		ofPushMatrix();
+		ofTranslate(pos);
+		ofRotateDeg(t * (18.0f + p.spinSpeed * 0.4f) + fi * 12.0f, 1, 1, 0);
+
+		const float s = 14.0f + 22.0f * (0.5f + 0.5f * sinf(t * 2.0f + fi * 0.37f));
+		switch (i % 4)
+		{
+		case 0:
+			ofSetColor(255, 120, 150, 140);
+			ofDrawIcoSphere(s * 0.75f);
+			break;
+		case 1:
+			ofSetColor(120, 220, 255, 130);
+			ofDrawCone(s * 0.6f, s * 1.7f);
+			break;
+		case 2:
+			ofSetColor(255, 220, 120, 120);
+			ofDrawCylinder(s * 0.55f, s * 1.8f);
+			break;
+		default:
+			ofSetColor(170, 255, 180, 120);
+			ofDrawBox(s);
+			break;
+		}
+		ofPopMatrix();
+	}
+
+	ofNoFill();
 	cam2.end();
 	ofPopStyle();
 }

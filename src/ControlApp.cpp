@@ -72,7 +72,14 @@ void ControlApp::drawSceneControls()
 	if (state->currentScene == SceneId::Scene1)
 	{
 		ImGui::Text("Scene1 Params");
+
+		ImGui::Checkbox("BPM Pattern Switch", &state->scene1.bpmPatternSwitch);
+		ImGui::SliderInt("Switch Every Beats", &state->scene1.bpmPatternEveryBeats, 1, 8);
+
+		ImGui::BeginDisabled(state->scene1.bpmPatternSwitch);
 		ImGui::SliderInt("Pattern", &state->scene1.pattern, 0, 4);
+		ImGui::EndDisabled();
+
 		ImGui::SliderFloat("Density", &state->scene1.density, 80.0f, 480.0f);
 		ImGui::SliderFloat("Complexity", &state->scene1.complexity, 1.0f, 10.0f);
 		ImGui::SliderFloat("Morph", &state->scene1.morph, 0.0f, 1.0f);
